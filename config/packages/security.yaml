@@ -11,7 +11,7 @@ parameters:
     sylius.security.new_api_user_account_regex: "^%sylius.security.new_api_user_account_route%"
 
 security:
-    always_authenticate_before_granting: true
+#    always_authenticate_before_granting: true
     providers:
         sylius_admin_user_provider:
             id: sylius.admin_user_provider.email_or_name_based

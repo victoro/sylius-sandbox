@@ -17,7 +17,7 @@ use App\Entity\Newsletter as Newsletter;
 class Customer extends BaseCustomer
 {
     /**
-     * @var ArrayCollection|Newsletter[]
+     * @var Collection|Newsletter[]
      *
      * @ORM\ManyToMany(targetEntity="App\Entity\Newsletter", cascade={"all"}, inversedBy="customers")
      * @ORM\JoinTable(name="sylius_customer_newsletter",
@@ -32,19 +32,25 @@ class Customer extends BaseCustomer
      */
     private $newsletters;
 
+    public function __construct()
+    {
+        parent::__construct();
+        $this->newsletters = new ArrayCollection();
+    }
+
     /**
-     * @return ArrayCollection|Newsletter[]
+     * @return Collection|Newsletter[]
      */
-    public function getNewsletters(): ArrayCollection
+    public function getNewsletters(): Collection
     {
         return $this->newsletters;
     }
 
     /**
-     * @param  ArrayCollection|Newsletter[]  $newsletters
+     * @param  Collection|Newsletter[]  $newsletters
      * @return Customer
      */
-    public function setNewsletters(ArrayCollection $newsletters): Customer
+    public function setNewsletters(Collection $newsletters): Customer
     {
         $this->newsletters = $newsletters;
 

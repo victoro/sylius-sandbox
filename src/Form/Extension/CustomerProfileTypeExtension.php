@@ -2,19 +2,19 @@
 
 namespace App\Form\Extension;
 
+use App\Entity\Customer\Customer;
 use App\Entity\Newsletter;
-use App\Form\NewsletterType;
+use Sylius\Bundle\CustomerBundle\Form\Type\CustomerProfileType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormBuilderInterface;
-use Sylius\Bundle\CoreBundle\Form\Type\Customer\CustomerRegistrationType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CustomerRegistrationTypeExtension extends AbstractTypeExtension
+class CustomerProfileTypeExtension extends AbstractTypeExtension
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->remove('subscribedToNewsletter')
             ->add('newsletters', EntityType::class, [
                 'class' => Newsletter::class,
                 'choice_label' => 'type',
@@ -24,8 +24,15 @@ class CustomerRegistrationTypeExtension extends AbstractTypeExtension
         ;
     }
 
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => Customer::class,
+        ]);
+    }
+
     public static function getExtendedTypes(): iterable
     {
-        return [CustomerRegistrationType::class];
+        return [CustomerProfileType::class];
     }
 }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Repository\NewsletterRepository;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Customer\Customer;
@@ -47,7 +46,7 @@ class Newsletter
     private bool $isActive;
 
     /**
-     * @var ArrayCollection|Customer[]
+     * @var Collection|Customer[]
      *
      * @ORM\ManyToMany(targetEntity="App\Entity\Customer\Customer", mappedBy="newsletters")
      */
@@ -126,5 +125,9 @@ class Newsletter
         return $this->customers;
     }
 
+    public function __toString()
+    {
+        return 'sylius_newsletter';
+    }
 
 }

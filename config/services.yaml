@@ -34,8 +34,14 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
     
-    app.form.extension.type.customer_profile:
+    app.form.extension.type.customer_register:
         class: App\Form\Extension\CustomerRegisterTypeExtension
         tags:
             - { name: form.type_extension, 
-                extended_type: Sylius\Bundle\CustomerBundle\Form\Type\RegisterProfileType }
+                extended_type: Sylius\Bundle\CustomerBundle\Form\Type\CustomerRegistrationType }
+    
+    app.form.extension.type.customer_profile:
+        class: App\Form\Extension\CustomerProfileTypeExtension
+        tags:
+            - { name: form.type_extension,
+                extended_type: Sylius\Bundle\CustomerBundle\Form\Type\CustomerProfileType }
