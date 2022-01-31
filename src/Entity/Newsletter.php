@@ -41,7 +41,7 @@ class Newsletter
     private string $content;
 
     /**
-     * @ORM\Column(name="is_active", type="boolean", nullable=true, options={"default": true})
+     * @ORM\Column(name="is_active", type="boolean", options={"default": true})
      */
     private bool $isActive;
 

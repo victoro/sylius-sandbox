@@ -1,0 +1,12 @@
+{% block subject %}
+{{ newsletterSubject }}
+{% endblock %}
+
+{% block body %}
+Hello {{ customerFirstname }}!
+
+    You are receiving this email because you have subscribed to {{newsletterType}}.
+    Netenders.
+
+    You can unsubscribe from this newsletter by clicking <a href="http://localhost/newsletter/unsubscribe/{{ newsletterLogId }}">here</a>.
+{% endblock %}

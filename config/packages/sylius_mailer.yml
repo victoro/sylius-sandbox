@@ -1,0 +1,8 @@
+sylius_mailer:
+    sender:
+        name: Newsletter Homework
+        address: no-reply@homework-example.com
+    emails:
+        newsletter_type_notification:
+            subject: "{{ newsletterSubject }}"
+            template: "Email/newsletterHomework.html.twig"

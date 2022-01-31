@@ -15,17 +15,23 @@ class NewsletterLog
 {
     use TimestampableEntity;
 
+    const STATUS_INITIALIZED = 0;
+    const STATUS_SENT = 1;
+    const STATUS_OPENED = 2;
+    const STATUS_UNSUBSCRIBED = 3;
+
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="guid")
+     * @ORM\GeneratedValue(strategy="UUID")
+     * @ORM\Column(type="guid", unique=true)
+     *
      */
     private string $id;
 
     /**
      * @var Customer
      *
-     * @ORM\OneToOne(targetEntity="App\Entity\Customer\Customer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Customer\Customer")
      * @ORM\JoinColumn(referencedColumnName="id")
      */
     private Customer $customer;
@@ -33,10 +39,17 @@ class NewsletterLog
     /**
      * @var Newsletter
      *
-     * @ORM\OneToOne(targetEntity="App\Entity\Newsletter")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Newsletter")
      * @ORM\JoinColumn(referencedColumnName="id")
      */
     private Newsletter $newsletter;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="newsletter_status", type="smallint", options={"default": 0})
+     */
+    private int $newsletterStatus = 0;
 
     /**
      * @return string
@@ -84,6 +97,22 @@ class NewsletterLog
         return $this;
     }
 
+    /**
+     * @return int
+     */
+    public function getNewsletterStatus(): int
+    {
+        return $this->newsletterStatus;
+    }
 
+    /**
+     * @param  int  $newsletterStatus
+     * @return NewsletterLog
+     */
+    public function setNewsletterStatus(int $newsletterStatus): NewsletterLog
+    {
+        $this->newsletterStatus = $newsletterStatus;
 
+        return $this;
+    }
 }
