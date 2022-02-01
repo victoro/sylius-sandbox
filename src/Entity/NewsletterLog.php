@@ -3,12 +3,12 @@
 namespace App\Entity;
 
 use App\Entity\Customer\Customer;
-use App\Repository\NewletterLogRepository;
+use App\Repository\NewsletterLogRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
- * @ORM\Entity(repositoryClass=NewletterLogRepository::class)
+ * @ORM\Entity(repositoryClass=NewsletterLogRepository::class)
  * @ORM\Table(name="sylius_newsletter_log")
  */
 class NewsletterLog
@@ -45,7 +45,7 @@ class NewsletterLog
     private Newsletter $newsletter;
 
     /**
-     * @var int
+     * @var integer
      *
      * @ORM\Column(name="newsletter_status", type="smallint", options={"default": 0})
      */
@@ -98,7 +98,7 @@ class NewsletterLog
     }
 
     /**
-     * @return int
+     * @return integer
      */
     public function getNewsletterStatus(): int
     {

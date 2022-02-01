@@ -35,7 +35,7 @@ services:
         tags: ['controller.service_arguments']
     
     app.form.extension.type.customer_register:
-        class: App\Form\Extension\CustomerRegisterTypeExtension
+        class: App\Form\Extension\CustomerRegistrationTypeExtension
         tags:
             - { name: form.type_extension, 
                 extended_type: Sylius\Bundle\CustomerBundle\Form\Type\CustomerRegistrationType }
@@ -45,3 +45,7 @@ services:
         tags:
             - { name: form.type_extension,
                 extended_type: Sylius\Bundle\CustomerBundle\Form\Type\CustomerProfileType }
+    app.listener.admin.menu_builder:
+        class: App\Menu\AdminMenuListener
+        tags:
+            - { name: kernel.event_listener, event: sylius.menu.admin.main, method: addAdminMenuItems }

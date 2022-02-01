@@ -8,12 +8,13 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Customer\Customer;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Sylius\Component\Resource\Model\ResourceInterface;
 
 /**
  * @ORM\Entity(repositoryClass=NewsletterRepository::class)
  * @ORM\Table(name="sylius_newsletter")
  */
-class Newsletter
+class Newsletter implements ResourceInterface
 {
 
     use TimestampableEntity;
@@ -23,7 +24,7 @@ class Newsletter
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer", name="id")
      */
-    private int $id;
+    private ?int $id;
 
     /**
      * @ORM\Column(type="string", length=127, nullable=false, unique=true)
@@ -53,9 +54,9 @@ class Newsletter
     private $customers;
 
     /**
-     * @return int
+     * @return integer
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -123,6 +124,36 @@ class Newsletter
     public function getCustomers()
     {
         return $this->customers;
+    }
+
+    /**
+     * @param $customers
+     * @return $this
+     */
+    public function setCustomers($customers)
+    {
+        $this->customers = $customers;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isActive(): bool
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * @param  bool  $isActive
+     * @return Newsletter
+     */
+    public function setIsActive(bool $isActive): Newsletter
+    {
+        $this->isActive = $isActive;
+
+        return $this;
     }
 
     public function __toString()

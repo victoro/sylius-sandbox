@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\NewsletterLog;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\ClassMetadata;
+use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 
 /**
  * @method NewsletterLog|null find($id, $lockMode = null, $lockVersion = null)
@@ -12,11 +13,11 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method NewsletterLog[]    findAll()
  * @method NewsletterLog[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class NewletterLogRepository extends ServiceEntityRepository
+class NewsletterLogRepository extends EntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        parent::__construct($registry, NewsletterLog::class);
+        parent::__construct($entityManager, new ClassMetadata(NewsletterLog::class));
     }
 
     // /**

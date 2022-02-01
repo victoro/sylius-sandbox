@@ -1,0 +1,8 @@
+sylius_resource:
+    resources:
+        sylius.newsletter:
+            classes:
+                model: App\Entity\Newsletter
+        sylius.customer_newsletter:
+            classes:
+                model: App\Entity\Customer\Customer

@@ -1,0 +1,61 @@
+sylius_grid:
+    grids:
+        sylius_admin_newsletter:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: App\Entity\Newsletter
+            fields:
+                type:
+                    type: string
+                    label: sylius.ui.name
+                subject:
+                    type: string
+                    label: sylius.ui.subject
+                content:
+                    type: string
+                    label: sylius.ui.content
+                isActive:
+                    type: twig
+                    label: sylius.ui.enabled
+                    options:
+                        template: "@SyliusUi/Grid/Field/enabled.html.twig"
+            actions:
+                main:
+                    create:
+                        type: create
+                item:
+                    update:
+                        type: update
+                    delete:
+                        type:
+                            delete
+                bulk:
+                    delete:
+                        type: delete
+        sylius_admin_customer_newsletter:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: App\Entity\Customer\Customer
+#                    repository:
+#                        method: createListQueryBuilder
+            fields:
+                firstName:
+                    type: string
+                    label: sylius.ui.first_name
+                    sortable: ~
+                lastName:
+                    type: string
+                    label: sylius.ui.last_name
+                    sortable: ~
+                email:
+                    type: string
+                    label: sylius.ui.email
+                    sortable: ~
+                newsletters:
+                    type: twig
+                    label: sylius.ui.newsletter
+                    options:
+                        template:                            "@SyliusAdmin/Newsletter/Grid/Field/newsletters.html.twig"
+                    
