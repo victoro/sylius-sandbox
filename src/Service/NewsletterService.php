@@ -16,16 +16,16 @@ use Throwable;
 
 class NewsletterService
 {
-    /** @var SymfonyStyle  */
+    /** @var SymfonyStyle */
     private SymfonyStyle $symfonyStyle;
 
     /** @var NewsletterRepository */
     private NewsletterRepository $newsletterRepository;
 
-    /** @var EntityManagerInterface  */
+    /** @var EntityManagerInterface */
     private EntityManagerInterface $entityManager;
 
-    /** @var SenderInterface  */
+    /** @var SenderInterface */
     private SenderInterface $sender;
 
     /** @var LoggerInterface */
@@ -58,11 +58,13 @@ class NewsletterService
     public function sendNewsletter(array $options = [])
     {
         if (!empty($options['newsletterId'])) {
-            $newsletter = $this->newsletterRepository->find($options['newsletterId']);
+            $newsletter = $this->newsletterRepository->findOneBy(['id' => $options['newsletterId'], 'isActive' => 1]);
         }
 
         if (empty($newsletter) && !empty($options['newsletter_type'])) {
-            $newsletter = $this->newsletterRepository->findOneBy(['type' => $options['newsletter_type']]);
+            $newsletter = $this->newsletterRepository->findOneBy(
+                ['type' => $options['newsletter_type'], 'isActive' => 1]
+            );
         }
 
         if (empty($newsletter)) {
@@ -70,12 +72,11 @@ class NewsletterService
         }
 
         $customers = $newsletter->getCustomers();
-        if(empty($customers)) {
+        if (empty($customers)) {
             throw new Exception('There are no subscribers to this newsletter.');
         }
 
         foreach ($customers as $customer) {
-
             $email = $customer->getEmail();
 
             if (!empty($email)) {
@@ -96,7 +97,6 @@ class NewsletterService
                     $this->entityManager->flush();
 
                     $this->entityManager->commit();
-
                 } catch (Throwable $e) {
                     $message = sprintf(
                         'Error sending email to [%s, %s]: [%s, %s]',
@@ -112,7 +112,6 @@ class NewsletterService
                 }
             }
         }
-
     }
 
     /**
@@ -129,9 +128,9 @@ class NewsletterService
         $this->sender->send('newsletter_type_notification', [$customer->getEmail()], [
             'newsletterSubject' => $newsletter->getSubject(),
             'newsletterContent' => $newsletter->getContent(),
-            'newsletterType' => $newsletter->getType(),
+            'newsletterType'    => $newsletter->getType(),
             'customerFirstname' => $customer->getFirstName(),
-            'newsletterLogId' => $newsletterLogId,
+            'newsletterLogId'   => $newsletterLogId,
         ]);
     }
 
@@ -152,7 +151,7 @@ class NewsletterService
     }
 
     /**
-     * @param SymfonyStyle $symfonyStyle
+     * @param  SymfonyStyle  $symfonyStyle
      */
     public function setSymfonyStyle(SymfonyStyle $symfonyStyle): void
     {

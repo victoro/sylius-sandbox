@@ -34,7 +34,6 @@ class SyliusNewslettersSendCommand extends Command
         $this->logger = $logger;
     }
 
-
     protected function configure(): void
     {
         $this
